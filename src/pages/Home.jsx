@@ -86,7 +86,7 @@ const LoginSimulator = styled.div`
   flex-direction: column;
   align-items: center;
   position: absolute;
-  right: 2em;
+  right: 1em;
   top: 0;
 `;
 

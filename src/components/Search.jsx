@@ -9,7 +9,8 @@ const Wrapper = styled.section`
   flex-direction: column;
   align-items: center;
   gap: 2em;
-  width: 50%;
+  width: 100%;
+  max-width: 500px;
 
   div {
     display: flex;
