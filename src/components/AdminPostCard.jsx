@@ -1,5 +1,6 @@
 import { Pencil, Trash } from 'lucide-react';
 
+import { deletePost } from '../services';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
@@ -45,7 +46,7 @@ const Wrapper = styled.section`
     margin: 0;
   }
 
-  subtext {
+  span {
     font-style: italic;
     color: gray;
     margin: 0;
@@ -65,13 +66,13 @@ export const AdminPostCard = ({ id }) => {
         <span onClick={() => navigate(`/post/${id}`)}>
           <Pencil />
         </span>
-        <span>
+        <span onClick={() => deletePost(id)}>
           <Trash />
         </span>
       </div>
       <h2>{`Post Title`}</h2>
       <h3>{`id: ` + id}</h3>
-      <subtext>{`Post Author`}</subtext>
+      <span>{`Post Author`}</span>
     </Wrapper>
   );
 };

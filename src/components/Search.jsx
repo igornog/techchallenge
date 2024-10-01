@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useUserStore } from '../context/userContext';
 
 const Wrapper = styled.section`
@@ -65,14 +66,17 @@ const Button = styled.button`
   }
 `;
 
-export const Search = () => {
+export const Search = ({ searchInPosts }) => {
   const navigate = useNavigate();
   const { admin } = useUserStore();
+  const [search, setSearch] = useState('');
 
   return (
     <Wrapper>
-      <Input />
-      <SearchButton>{`Search`}</SearchButton>
+      <Input onChange={(e) => setSearch(e.target.value)} />
+      <SearchButton
+        onClick={() => searchInPosts(search)}
+      >{`Search`}</SearchButton>
       {admin && (
         <div>
           <Button

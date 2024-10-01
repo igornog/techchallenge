@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
+
 import { PostCard } from '../components/PostCard';
 import { Search } from '../components/Search';
+import { getPosts } from '../services';
 import styled from 'styled-components';
 import { useUserStore } from '../context/userContext';
 
@@ -29,8 +32,8 @@ const Title = styled.h2`
 const Switch = styled.label`
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 34px;
+  height: 18px;
 
   input {
     opacity: 0;
@@ -51,10 +54,10 @@ const Switch = styled.label`
     &:before {
       position: absolute;
       content: '';
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
+      height: 13px;
+      width: 13px;
+      left: 3px;
+      bottom: 2px;
       background-color: white;
       transition: 0.4s;
     }
@@ -69,7 +72,7 @@ const Switch = styled.label`
   }
 
   input:checked + .slider:before {
-    transform: translateX(26px);
+    transform: translateX(14px);
   }
 
   .slider.round {
@@ -92,6 +95,30 @@ const LoginSimulator = styled.div`
 
 export const Home = () => {
   const { admin, setAdmin } = useUserStore();
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    getPosts().then((response) => {
+      setPosts(response);
+    });
+  }, []);
+
+  const searchInPosts = (search) => {
+    getPosts().then((response) => {
+      const filteredPosts = response.filter((post) => {
+        return post.title.toLowerCase().includes(search.toLowerCase());
+      });
+
+      if (filteredPosts.length === 0) {
+        alert('No posts found');
+        getPosts().then((response) => {
+          setPosts(response);
+        });
+      }
+
+      setPosts(filteredPosts);
+    });
+  };
 
   return (
     <Wrapper>
@@ -106,14 +133,13 @@ export const Home = () => {
           <span className='slider round'></span>
         </Switch>
       </LoginSimulator>
-      <Title>{`Posts`}</Title>
-      <Search />
+      <Title>{`Posts Web App`}</Title>
+      <Search searchInPosts={searchInPosts} />
 
       <PostWrapper>
-        <PostCard id={1} />
-        <PostCard id={2} />
-        <PostCard id={3} />
-        <PostCard id={4} />
+        {posts?.map((post) => {
+          return <PostCard id={post.id} key={post.id} />;
+        })}
       </PostWrapper>
     </Wrapper>
   );

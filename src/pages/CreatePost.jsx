@@ -1,5 +1,6 @@
 import { MoveLeft } from 'lucide-react';
 import React from 'react';
+import { createPost } from '../services';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -67,10 +68,17 @@ const Form = styled.form`
 
 export const CreatePost = () => {
   const navigate = useNavigate();
+  const [title, setTitle] = React.useState('');
+  const [author, setAuthor] = React.useState('');
+  const [content, setContent] = React.useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handlePostCreation = () => {
+    createPost({ title, author, content });
+  };
 
   return (
     <Wrapper>
@@ -79,10 +87,21 @@ export const CreatePost = () => {
         <MoveLeft />
       </p>
       <h2>{`Create post`}</h2>
-      <Form>
-        <input type={'text'} placeholder={'Title'} />
-        <input type={'text'} placeholder={'Author'} />
-        <textarea placeholder={'Content'} />
+      <Form onSubmit={() => handlePostCreation()}>
+        <input
+          type={'text'}
+          placeholder={'Title'}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          type={'text'}
+          placeholder={'Author'}
+          onChange={(e) => setAuthor(e.target.value)}
+        />
+        <textarea
+          placeholder={'Content'}
+          onChange={(e) => setContent(e.target.value)}
+        />
         <button type={'submit'}>{`Create`}</button>
       </Form>
     </Wrapper>

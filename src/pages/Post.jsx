@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { MoveLeft } from 'lucide-react';
+import { editPost } from '../services';
 import styled from 'styled-components';
 import { useUserStore } from '../context/userContext';
 
@@ -20,7 +21,7 @@ const Wrapper = styled.section`
     margin-bottom: 0;
   }
 
-  subtext {
+  span {
     font-style: italic;
     color: gray;
   }
@@ -64,7 +65,7 @@ const Modal = styled.section`
     margin-bottom: 0;
   }
 
-  subtext {
+  span {
     font-style: italic;
     color: gray;
   }
@@ -127,6 +128,9 @@ const Button = styled.button`
 export const Post = () => {
   const navigate = useNavigate();
   const { admin } = useUserStore();
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [content, setContent] = useState('');
 
   const { id } = useParams();
   const [editOpen, setEditOpen] = useState(false);
@@ -134,6 +138,10 @@ export const Post = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleEdit = () => {
+    editPost({ postId: id, title, author, content });
+  };
 
   return (
     <>
@@ -146,20 +154,26 @@ export const Post = () => {
                 type={'text'}
                 placeholder={'Title'}
                 defaultValue={`Post Title ` + id}
+                onChange={(e) => setTitle(e.target.value)}
               />
               <label>{`Edit Author:`}</label>
               <input
                 type={'text'}
                 placeholder={'Author'}
                 defaultValue={`Post Author`}
+                onChange={(e) => setAuthor(e.target.value)}
               />
 
               <label>{`Edit Content:`}</label>
               <textarea
                 placeholder={'Content'}
                 defaultValue={`Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content.`}
+                onChange={(e) => setContent(e.target.value)}
               />
-              <Button type={'submit'}>{`Save changes`}</Button>
+              <Button
+                type={'submit'}
+                onClick={handleEdit}
+              >{`Save changes`}</Button>
             </Form>
           </Modal>
         </ModalWrapper>
@@ -170,7 +184,7 @@ export const Post = () => {
             <MoveLeft />
           </p>
           <h2>{`Post Title ` + id}</h2>
-          <subtext>{`Post Author`}</subtext>
+          <span>{`Post Author`}</span>
           <p>{`Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content.`}</p>
 
           {admin && (

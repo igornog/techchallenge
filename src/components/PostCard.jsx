@@ -22,7 +22,7 @@ const Wrapper = styled.section`
     margin-bottom: 0;
   }
 
-  subtext {
+  span {
     font-style: italic;
     color: gray;
   }
@@ -37,8 +37,8 @@ export const PostCard = ({ id }) => {
 
   return (
     <Wrapper onClick={() => navigate(`/post/${id}`)}>
-      <h2>{`Post Title`}</h2>
-      <subtext>{`Post Author`}</subtext>
+      <h2>{`Post Title ` + id}</h2>
+      <span>{`Post Author`}</span>
       <p>{`Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content.`}</p>
     </Wrapper>
   );
