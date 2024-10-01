@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useUserStore } from '../context/userContext';
 
 const Wrapper = styled.section`
   margin: 2em 0;
@@ -8,6 +9,7 @@ const Wrapper = styled.section`
   flex-direction: column;
   align-items: center;
   gap: 2em;
+  width: 50%;
 
   div {
     display: flex;
@@ -35,6 +37,12 @@ const SearchButton = styled.button`
   font-family: 'Roboto', sans-serif;
   background-color: #f5cb5c;
   cursor: pointer;
+
+  &:hover {
+    background-color: #000000;
+    color: white;
+    transition: all 0.3s;
+  }
 `;
 
 const Button = styled.button`
@@ -48,21 +56,32 @@ const Button = styled.button`
   background-color: #000000;
   color: white;
   cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: all 0.3s;
+  }
 `;
 
 export const Search = () => {
   const navigate = useNavigate();
+  const { admin } = useUserStore();
 
   return (
     <Wrapper>
       <Input />
-      <SearchButton>{`Buscar`}</SearchButton>
-      <div>
-        <Button>{`Admin Console`}</Button>
-        <Button onClick={() => navigate(`/create-post`)}>
-          {`Create a New Post`}
-        </Button>
-      </div>
+      <SearchButton>{`Search`}</SearchButton>
+      {admin && (
+        <div>
+          <Button
+            onClick={() => navigate(`/admin-console`)}
+          >{`Admin Console`}</Button>
+          <Button onClick={() => navigate(`/create-post`)}>
+            {`Create a New Post`}
+          </Button>
+        </div>
+      )}
     </Wrapper>
   );
 };

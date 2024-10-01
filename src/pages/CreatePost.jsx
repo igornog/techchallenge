@@ -1,3 +1,4 @@
+import { MoveLeft } from 'lucide-react';
 import React from 'react';
 import styled from 'styled-components';
 import { useEffect } from 'react';
@@ -73,10 +74,10 @@ export const CreatePost = () => {
 
   return (
     <Wrapper>
-      <p
-        id={'back-btn'}
-        onClick={() => navigate(`/home`)}
-      >{`back to home screen`}</p>
+      <p id={'back-btn'} onClick={() => navigate(`/home`)}>
+        {' '}
+        <MoveLeft />
+      </p>
       <h2>{`Create post`}</h2>
       <Form>
         <input type={'text'} placeholder={'Title'} />

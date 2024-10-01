@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { MoveLeft } from 'lucide-react';
 import styled from 'styled-components';
+import { useUserStore } from '../context/userContext';
 
 const Wrapper = styled.section`
   padding: 4em;
@@ -124,6 +126,8 @@ const Button = styled.button`
 
 export const Post = () => {
   const navigate = useNavigate();
+  const { admin } = useUserStore();
+
   const { id } = useParams();
   const [editOpen, setEditOpen] = useState(false);
 
@@ -161,15 +165,17 @@ export const Post = () => {
         </ModalWrapper>
       ) : (
         <Wrapper>
-          <p
-            id={'back-btn'}
-            onClick={() => navigate(`/home`)}
-          >{`back to home screen`}</p>
+          <p id={'back-btn'} onClick={() => navigate(`/home`)}>
+            {' '}
+            <MoveLeft />
+          </p>
           <h2>{`Post Title ` + id}</h2>
           <subtext>{`Post Author`}</subtext>
           <p>{`Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content. Post Content.`}</p>
 
-          <Button onClick={() => setEditOpen(true)}>{`Edit post`}</Button>
+          {admin && (
+            <Button onClick={() => setEditOpen(true)}>{`Edit post`}</Button>
+          )}
         </Wrapper>
       )}
     </>

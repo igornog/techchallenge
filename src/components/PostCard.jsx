@@ -11,6 +11,12 @@ const Wrapper = styled.section`
   align-items: center;
   gap: 1em;
   cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: all 0.3s;
+  }
 
   h2 {
     margin-bottom: 0;
