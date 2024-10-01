@@ -1,3 +1,13 @@
+📘 Projeto React - Gerenciamento de Posts
+Este repositório contém um aplicativo web em React que permite a leitura, criação, edição e exclusão de posts. O aplicativo também inclui um console de administração para gerenciar os posts.
+
+🛠️ Tecnologias Utilizadas
+React: Framework JavaScript para a construção da interface de usuário.
+Styled-components: Para estilização utilizando CSS-in-JS.
+Axios: Cliente HTTP para realizar requisições à API (GET, POST, PUT, DELETE).
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
